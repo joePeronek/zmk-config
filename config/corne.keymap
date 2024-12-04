@@ -72,6 +72,6 @@
 		&trans &trans &trans &trans &trans  						&kp LEFT &kp DOWN  &kp UP &kp RIGHT &kp ENTER 
 		&trans &trans &trans &trans &trans   				&trans &kp PG_DN  &kp K_VOL_DN  &trans &trans   
 					 &to 0 &trans  					&sk RALT &to 1
-        };
+        >
         };
 };
