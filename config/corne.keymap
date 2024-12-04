@@ -55,7 +55,7 @@
 		&none &kp TAB    &kp EQUAL    &kp LA(RBKT)      &kp LA(LS(RBKT))     &kp SQT 	&kp BSLH &kp LBRC  &kp RBRC &kp PIPE  &kp ENTER &none
 		&none &kp TILDE    &kp LA(N3) 	&kp LA(LBKT) &kp LA(LS(LBKT))  &kp DQT 	        &kp LBKT &kp LPRN &kp RPRN &kp RBKT  &to 3 &none 
 					   &kp ENTER &to 0  &sk LSHIFT  					&sk RALT &to 2 &kp BSPC 
-		    >
+		    >;
 		};
 		
 		right_layer {
