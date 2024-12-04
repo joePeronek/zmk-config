@@ -72,7 +72,7 @@
 		&none &trans &trans &trans &trans &trans			&kp LG(LBKT)   &kp LC(LS(TAB))   &kp RC(TAB) &kp LG(RBKT) &trans &none
 		&none &trans &trans &trans &trans &trans  			&kp LEFT &kp DOWN  &kp UP &kp RIGHT &kp ENTER &none
 		&none &trans &trans &trans &trans &trans   			&trans &kp PG_DN  &kp K_VOL_DN  &trans &trans &none
-					&kp ENTER &to 0 &trans  					&kp BPSC &sk RALT &to 1
+					&kp ENTER &to 0 &sk LSHIFT                  &sk RALT &to 1 &kp BSPC
             >;
         };
     };
