@@ -43,18 +43,30 @@
 
         default_layer {
             bindings = <
-        &none &kp Q &kp W &kp F &kp P &kp G                 &kp J &kp L  &kp U     &kp Y   &kp SEMI &none
-        &none &kp A &kp R &hm LALT S &hm LGUI T &kp D       &kp H &hm RGUI N  &hm RALT E     &kp I   &kp O &none    
-        &none &kp Z &kp X &kp C &kp V &kp B                 &kp K &kp M  &kp COMMA &kp DOT &kp FSLH &none
-                 &kp ENTER &mt LC(LS(LALT)) SPACE &sk LSHIFT   &sk RCTRL &to 1 &kp BSPC
+        &none &kp Q &kp W       &kp F       &kp P       &kp G           &kp J &kp L         &kp U       &kp Y       &kp SEMI &none
+        &none &kp A &hm LCTRL R &hm LALT S  &hm LGUI T  &kp D           &kp H &hm RGUI N    &hm RALT E  &hm LCTRL I &kp O &none    
+        &none &kp Z &kp X       &kp C       &kp V       &kp B           &kp K &kp M         &kp COMMA   &kp DOT     &kp FSLH &none
+                 &kp LCTRL &sk LSHIFT &mt LC(LS(LALT)) SPACE           &kp ENTER &to 1 &kp TAB
             >;
         };
+/* Layer 1: Symbols
+ * ,-----.-----.-----.-----.-----.                      ,-----.-----.-----.-----.-----.
+ * | 1!  | 2@  | 3#  | 4$  | 5%  |                      | 6^  | 7&  | 8*  | 9(  | 0)  |
+ * |-----+-----+-----+-----+-----|                      |-----+-----+-----+-----+-----|
+ * | `~  |HOME |PGUP |PGDN | END |                      |LEFT |DOWN | UP  |RGHT | '"  |
+ * |-----+-----+-----+-----+-----+                      |-----+-----+-----+-----+-----|
+ * | ESC | -_  | =+  |     | to 3|                      | {[  |  (  |  )  | ]}  | \|  |
+ * `-----'-----'-----'-----'-----'                      `-----'-----'-----'-----'-----'
+ *               .-------.-------.-------.      .-------.-------.-------.   
+ *               |       |       |       |      |       |       |       |
+ *               '-------'-------'-------'      '-------'-------'-------' 
+ */
       	left_layer {
             bindings = <
-		&none &kp ESC  &kp ATSN   &td LC(LG(LS(N4))) LS(N3) &kp DLLR    &kp PRCNT		&kp CARET &kp LS(COMMA) &kp LS(DOT) &kp SEMI &kp BKSP &none
-		&none &kp TAB    &kp EQUAL    &kp LA(RBKT)      &kp LA(LS(RBKT))     &kp SQT 	&kp BSLH &kp LBRC  &kp RBRC &kp PIPE  &kp ENTER &none
-		&none &kp TILDE    &kp LA(N3) 	&kp LA(LBKT) &kp LA(LS(LBKT))  &kp DQT 	        &kp LBKT &kp LPRN &kp RPRN &kp RBKT  &to 3 &none 
-					   &kp ENTER &to 0  &sk LSHIFT  					&sk RALT &to 2 &kp BSPC 
+		&none &kp N1     &kp N2 &kp N3 &kp N4 &kp N5                        &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &none
+        &none &kp GRAVE  &hm LCTRL R &hm LALT S  &hm LGUI T &kp BSPC        &kp LEFT &kp DOWN &kp UP &kp RIGHT &kp APOSTROPHE &none    
+		&none &kp ESCAPE &kp MINUS &kp EQUAL &kp LG(TAB) &to 3 	                &kp LBKT &kp LPRN &kp RPRN &kp RBKT &kp BACKSLASH &none 
+					   &kp LCTRL &sk LSHIFT &to 0  					&kp ENTER &to 2 &kp BSPC 
 		    >;
 		};
 		
