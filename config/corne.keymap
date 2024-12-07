@@ -64,7 +64,7 @@
       	left_layer {
             bindings = <
 		&none &kp N1     &kp N2 &kp N3 &kp N4 &kp N5                        &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &none
-        &none &kp GRAVE  &hm LCTRL &hm LALT S  &hm LGUI T &kp DOT         &kp LEFT &kp DOWN &kp UP &kp RIGHT &kp APOSTROPHE &none    
+        &none &kp GRAVE  &hm LCTRL R &hm LALT S  &hm LGUI T &kp DOT         &kp LEFT &kp DOWN &kp UP &kp RIGHT &kp APOSTROPHE &none    
 		&none &kp ESCAPE &kp MINUS &kp EQUAL &kp LC(GLOBE) &to 3 	                &kp LBKT &kp LPRN &kp RPRN &kp RBKT &kp BACKSLASH &none 
 					   &kp TAB &sk LSHIFT &to 0  					&kp ENTER &to 2 &kp BSPC 
 		    >;
