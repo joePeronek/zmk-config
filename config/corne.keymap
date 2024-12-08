@@ -26,7 +26,15 @@
             flavor = "tap-preferred";
             bindings = <&kp>, <&kp>;
         };
-	td: tapdance {
+        mo_tog: behavior_mo_tog {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "hold-preferred";
+            tapping-term-ms = <200>;
+            bindings = <&mo>, <&tog>;
+
+        };	
+        td: tapdance {
             compatible = "zmk,behavior-hold-tap";
             label = "TAPDANCE";
             #binding-cells = <2>;
@@ -46,7 +54,7 @@
         &none &kp Q &kp W       &kp F       &kp P       &kp G           &kp J &kp L         &kp U       &kp Y       &kp SEMI &none
         &none &kp A &hm LCTRL R &hm LALT S  &hm LGUI T  &kp D           &kp H &hm RGUI N    &hm RALT E  &hm LCTRL I &kp O &none    
         &none &kp Z &kp X       &kp C       &kp V       &kp B           &kp K &kp M         &kp COMMA   &kp DOT     &kp FSLH &none
-                 &kp TAB &sk LSHIFT &mt LC(LG(LALT)) SPACE           &kp ENTER &to 1 &kp BSPC
+                 &kp TAB &sk LSHIFT &mt LC(LG(LALT)) SPACE           &kp ENTER &mo_tog 1 1 &kp BSPC
             >;
         };
 /* Layer 1: Symbols
