@@ -26,15 +26,6 @@
             flavor = "tap-preferred";
             bindings = <&kp>, <&kp>;
         };
-        tap_tog: behavior_mo_tog {
-            compatible = "zmk,behavior-hold-tap";
-            #binding-cells = <2>;
-            quick-tap-ms = <0>
-            flavor = "tap-preferred";
-            tapping-term-ms = <200>;
-            bindings = <&kp>, <&tog>;
-
-        };	
         td: tapdance {
             compatible = "zmk,behavior-hold-tap";
             label = "TAPDANCE";
@@ -57,7 +48,7 @@
         &none &kp Z &kp X       &kp C       &kp V       &kp B           &kp K &kp M         &kp COMMA   &kp DOT     &kp FSLH &none
                  &kp TAB &kp LSHIFT &mt LC(LG(LALT)) SPACE           &kp ENTER &tog 1 &kp BSPC
             >;
-        };
+    };
 /* Layer 1: Symbols
  * ,-----.-----.-----.-----.-----.                      ,-----.-----.-----.-----.-----.
  * | 1!  | 2@  | 3#  | 4$  | 5%  |                      | 6^  | 7&  | 8*  | 9(  | 0)  |
@@ -75,7 +66,7 @@
 		&none &kp N1     &kp N2 &kp N3 &kp N4 &kp N5                        &kp N6 &kp N7 &kp N8 &kp N9 &kp N0 &none
         &none &kp GRAVE  &hm LCTRL R &hm LALT S  &hm LGUI T &kp DOT         &kp LEFT &kp DOWN &kp UP &kp RIGHT &kp APOSTROPHE &none    
 		&none &kp ESCAPE &kp MINUS &kp EQUAL &kp GLOBE &to 3 	                &kp LBKT &kp LPRN &kp RPRN &kp RBKT &kp BACKSLASH &none 
-					   &kp TAB &sk LSHIFT &tap_tog 2 SPACE  					&kp ENTER &trans &kp BSPC 
+					   &kp TAB &sk LSHIFT &hm 2 SPACE  					&kp ENTER &trans &kp BSPC 
 		    >;
 		};
 		
