@@ -26,15 +26,6 @@
             flavor = "tap-preferred";
             bindings = <&kp>, <&kp>;
         };
-        td: tapdance {
-            compatible = "zmk,behavior-hold-tap";
-            label = "TAPDANCE";
-            #binding-cells = <2>;
-            tapping-term-ms = <150>;
-            quick_tap_ms = <0>;
-            flavor = "tap-preferred";
-            bindings = <&kp>, <&kp>;
-        };
     };  
 
     keymap  {
@@ -48,7 +39,7 @@
         &none &kp Z     &kp X       &kp C       &kp V       &kp B           &kp K &kp M         &kp COMMA   &kp DOT     &kp FSLH &none
                  &mo 2 &kp LSHIFT &kp SPACE           &kp ENTER &mo 1 &kp BSPC
             >;
-    };
+       };
 /* Layer 1: Symbols
  * ,-----.-----.-----.-----.-----.                      ,-----.-----.-----.-----.-----.
  * | 1!  | 2@  | 3#  | 4$  | 5%  |                      | 6^  | 7&  | 8*  | 9(  | 0)  |
