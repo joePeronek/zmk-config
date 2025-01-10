@@ -46,7 +46,7 @@
         &none &hm TAB Q &kp W       &kp F       &kp P       &kp G           &kp J &kp L         &kp U       &kp Y       &kp SEMI &none
         &none &hm ESC A &hm LCTRL R &hm LALT S  &hm LGUI T  &kp D           &kp H &hm RGUI N    &hm RALT E  &hm LCTRL I &kp O &none    
         &none &kp Z     &kp X       &kp C       &kp V       &kp B           &kp K &kp M         &kp COMMA   &kp DOT     &kp FSLH &none
-                 &mo 2 &kp LSHIFT &mt LC(LG(LALT)) SPACE           &kp ENTER &mo 1 &kp BSPC
+                 &mo 2 &kp LSHIFT &kp SPACE           &kp ENTER &mo 1 &kp BSPC
             >;
     };
 /* Layer 1: Symbols
@@ -66,7 +66,7 @@
 		&none &kp N1    &kp N2               &kp N3        &kp N4        &kp N5          &kp N6   &kp N7   &kp N8   &kp N9    &kp N0 &none
         &none &kp GRAVE &hm LCTRL UNDERSCORE &hm LALT PLUS &hm LGUI LBRC &kp RBRC        &kp LEFT &kp DOWN &kp UP   &kp RIGHT &kp APOSTROPHE &none    
     	&none &kp DOT   &kp MINUS            &kp EQUAL     &kp LBKT      &kp RBKT 	     &kp LBKT &kp LPRN &kp RPRN &kp RBKT  &kp BACKSLASH &none 
-					   &kp TAB &kp LSHIFT &mt 2 SPACE  					&kp ENTER &trans &kp BSPC 
+					   &kp TAB &kp LSHIFT &kp SPACE  					&kp ENTER &trans &kp BSPC 
 		    >;
 		};
 		
@@ -75,7 +75,7 @@
 		&none &kp C_BRI_INC &kp C_PREV &kp C_PP &kp C_NEXT &kp C_VOL_UP   		&kp F1 &kp F2 &kp F3 &kp F4 &kp F5 &none
 		&none &kp C_BRI_DEC &kp HOME &kp END &kp PG_UP &kp C_VOL_DN			    &kp F6 &kp F7 &kp F8 &kp F9 &kp F10 &none
 		&none &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &kp PG_DN &kp C_MUTE	        &kp F11 &kp F12 &kp F13 &kp F14 &to 3 &none
-                 &mo 3 &kp LSHIFT &mt LC(LG(LALT)) SPACE           &kp ENTER &mo 1 &kp BSPC
+                 &mo 3 &kp LSHIFT &kp SPACE           &kp ENTER &mo 1 &kp BSPC
 		    >;
 		};        
 
@@ -84,7 +84,7 @@
         &none &kp Q  &kp W  &kp E    &kp R      &kp T          &kp Y      &kp U     &kp I     &kp O     &kp P     &none
         &none &kp A  &kp S  &kp D    &kp F      &kp G          &kp H      &kp J     &kp K     &kp L     &kp SEMI  &none
         &none &kp Z  &kp X  &kp C    &kp V      &kp B          &kp N      &kp M     &kp CMMA  &kp DOT   &kp FSLH  &none
-                        &kp TAB &kp SHIFT &kp SPACE &kp ENTER  &to 0  &kp BSPC
+                        &kp TAB &kp SHIFT &kp SPACE                 &kp ENTER  &to 0  &kp BSPC
             >;
         };
     };
