@@ -8,13 +8,21 @@
 #include <dt-bindings/zmk/keys.h>
 #include <dt-bindings/zmk/bt.h>
 
+#define BASE   0
+#define SYM    1
+#define NAV    2
+#define ADJUST 3
 
-&mt {
-    flavor = "tap-preferred";
-    tapping_term_ms = <200>;
+/* Space/NAV and Enter/SYM thumbs: taps still fire on release, but pressing and
+ * releasing another key while the thumb is held selects the layer immediately
+ * instead of waiting for the tapping term.
+ */
+&lt {
+    flavor = "balanced";
+    tapping-term-ms = <200>;
 };
 
-/ { 
+/ {
 
     behaviors {
         hm: homerow_mods {
@@ -22,52 +30,105 @@
             label = "HOMEROW_MODS";
             #binding-cells = <2>;
             tapping-term-ms = <200>;
-            quick_tap_ms = <0>;
+            quick-tap-ms = <0>;
             flavor = "tap-preferred";
             bindings = <&kp>, <&kp>;
         };
-    };  
+    };
+
+    conditional_layers {
+        compatible = "zmk,conditional-layers";
+        tri_layer {
+            if-layers = <SYM NAV>;
+            then-layer = <ADJUST>;
+        };
+    };
 
     keymap  {
 
         compatible = "zmk,keymap";
 
+/* Layer 0: Base (Colemak-DH)
+ * ,-----.-----.-----.-----.-----.                      ,-----.-----.-----.-----.-----.
+ * |  Q  |  W  |  F  |  P  |  G  |                      |  J  |  L  |  U  |  Y  |  ;  |
+ * |-----+-----+-----+-----+-----|                      |-----+-----+-----+-----+-----|
+ * |  A  |R/Ctl|S/Alt|T/Gui|  D  |                      |  H  |N/Gui|E/Alt|I/Ctl|  O  |
+ * |-----+-----+-----+-----+-----+                      |-----+-----+-----+-----+-----|
+ * |  Z  |  X  |  C  |  V  |  B  |                      |  K  |  M  |  ,  |  .  |  /  |
+ * `-----'-----'-----'-----'-----'                      `-----'-----'-----'-----'-----'
+ *               .-------.-------.-------.      .-------.-------.-------.
+ *               |  ESC  |  TAB  |SPC/NAV|      |ENT/SYM| BSPC  | SHIFT |
+ *               '-------'-------'-------'      '-------'-------'-------'
+ */
         default_layer {
             bindings = <
-        &none &hm TAB Q &kp W       &kp F       &kp P       &kp G           &kp J &kp L         &kp U       &kp Y       &kp SEMI &none
-        &none &hm ESC A &hm LCTRL R &hm LALT S  &hm LGUI T  &kp D           &kp H &hm RGUI N    &hm RALT E  &hm LCTRL I &kp O &none    
+        &none &kp Q     &kp W       &kp F       &kp P       &kp G           &kp J &kp L         &kp U       &kp Y       &kp SEMI &none
+        &none &kp A     &hm LCTRL R &hm LALT S  &hm LGUI T  &kp D           &kp H &hm RGUI N    &hm RALT E  &hm LCTRL I &kp O &none
         &none &kp Z     &kp X       &kp C       &kp V       &kp B           &kp K &kp M         &kp COMMA   &kp DOT     &kp FSLH &none
-                              &mo 2 &kp LSHIFT &kp SPACE                    &kp ENTER &mo 1 &kp BSPC
+                              &kp ESC &kp TAB &lt NAV SPACE                 &lt SYM ENTER &kp BSPC &kp LSHIFT
             >;
        };
-/* Layer 1: Symbols
+/* Layer 1: Symbols / Numbers
  * ,-----.-----.-----.-----.-----.                      ,-----.-----.-----.-----.-----.
- * | 1!  | 2@  | 3#  | 4$  | 5%  |                      | 6^  | 7&  | 8*  | 9(  | 0)  |
+ * |  1  |  2  |  3  |  4  |  5  |                      |  6  |  7  |  8  |  9  |  0  |
  * |-----+-----+-----+-----+-----|                      |-----+-----+-----+-----+-----|
- * | `~  |HOME |PGUP |PGDN | END |                      |LEFT |DOWN | UP  |RGHT | '"  |
+ * |  `  |  ~  |  -  |  _  |  =  |                      |  +  |  [  |  ]  |  {  |  }  |
  * |-----+-----+-----+-----+-----+                      |-----+-----+-----+-----+-----|
- * | ESC | -_  | =+  |     | to 3|                      | {[  |  (  |  )  | ]}  | \|  |
+ * |  /  |  ?  |  \  |  |  |  '  |                      |  "  |  (  |  )  |  <  |  >  |
  * `-----'-----'-----'-----'-----'                      `-----'-----'-----'-----'-----'
- *               .-------.-------.-------.      .-------.-------.-------.   
+ *               .-------.-------.-------.      .-------.-------.-------.
  *               |       |       |       |      |       |       |       |
- *               '-------'-------'-------'      '-------'-------'-------' 
+ *               '-------'-------'-------'      '-------'-------'-------'
  */
-      	left_layer {
+      	sym_layer {
             bindings = <
-		&none &kp N1    &kp N2               &kp N3        &kp N4        &kp N5          &kp N6   &kp N7   &kp N8   &kp N9    &kp N0 &none
-        &none &kp GRAVE &hm LCTRL UNDERSCORE &hm LALT PLUS &hm LGUI LBRC &kp RBRC        &kp LEFT &kp DOWN &kp UP   &kp RIGHT &kp APOSTROPHE &none    
-    	&none &kp DOT   &kp MINUS            &kp EQUAL     &kp LBKT      &kp RBKT 	     &kp LBKT &kp LPRN &kp RPRN &kp RBKT  &kp BACKSLASH &none 
+		&none &kp N1    &kp N2     &kp N3    &kp N4         &kp N5          &kp N6   &kp N7   &kp N8   &kp N9        &kp N0 &none
+        &none &kp GRAVE &kp TILDE  &kp MINUS &kp UNDERSCORE &kp EQUAL       &kp PLUS &kp LBKT &kp RBKT &kp LBRC      &kp RBRC &none
+    	&none &kp FSLH  &kp QMARK  &kp BSLH  &kp PIPE       &kp SQT         &kp DQT  &kp LPAR &kp RPAR &kp LESS_THAN &kp GREATER_THAN &none
 					   &trans &trans &trans                                             &trans &trans &trans
 		    >;
 		};
-		
-		right_layer {
+
+/* Layer 2: Navigation
+ * ,-----.-----.-----.-----.-----.                      ,-----.-----.-----.-----.-----.
+ * |     |     |     |     |     |                      |HOME |PGDN |PGUP | END | DEL |
+ * |-----+-----+-----+-----+-----|                      |-----+-----+-----+-----+-----|
+ * |     |     |     |     |     |                      |LEFT |DOWN | UP  |RGHT |     |
+ * |-----+-----+-----+-----+-----+                      |-----+-----+-----+-----+-----|
+ * |     |     |     |     |     |                      |     |     |     |     |     |
+ * `-----'-----'-----'-----'-----'                      `-----'-----'-----'-----'-----'
+ *               .-------.-------.-------.      .-------.-------.-------.
+ *               |       |       |       |      |       |       |       |
+ *               '-------'-------'-------'      '-------'-------'-------'
+ */
+		nav_layer {
 		    bindings = <
-		&none &kp C_BRI_INC &kp C_PREV &kp C_PP &kp C_NEXT &kp C_VOL_UP   		&kp F1 &kp F2 &kp F3 &kp F4 &kp F5 &none
-		&none &kp C_BRI_DEC &kp HOME &kp END &kp PG_UP &kp C_VOL_DN			    &kp F6 &kp F7 &kp F8 &kp F9 &kp F10 &none
-		&none &bt BT_CLR &bt BT_SEL 0 &bt BT_SEL 1 &kp PG_DN &kp C_MUTE	        &kp F11 &kp F12 &kp F13 &kp F14 &kp F15  &none
+		&none &trans &trans &trans &trans &trans         &kp HOME &kp PG_DN &kp PG_UP &kp END   &kp DEL &none
+		&none &trans &trans &trans &trans &trans         &kp LEFT &kp DOWN  &kp UP    &kp RIGHT &trans  &none
+		&none &trans &trans &trans &trans &trans         &trans   &trans    &trans    &trans    &trans  &none
 					   &trans &trans &trans                                             &trans &trans &trans
 		    >;
-		};        
+		};
+
+/* Layer 3: Adjust (SYM + NAV)
+ * ,-----.-----.-----.-----.-----.                      ,-----.-----.-----.-----.-----.
+ * |BRI+ |PREV |PLAY |NEXT |VOL+ |                      | F1  | F2  | F3  | F4  | F5  |
+ * |-----+-----+-----+-----+-----|                      |-----+-----+-----+-----+-----|
+ * |BRI- |     |     |     |VOL- |                      | F6  | F7  | F8  | F9  | F10 |
+ * |-----+-----+-----+-----+-----+                      |-----+-----+-----+-----+-----|
+ * |BTCLR| BT0 | BT1 | BT2 |MUTE |                      | F11 | F12 |     |     |     |
+ * `-----'-----'-----'-----'-----'                      `-----'-----'-----'-----'-----'
+ *               .-------.-------.-------.      .-------.-------.-------.
+ *               |       |       |       |      |       |       |       |
+ *               '-------'-------'-------'      '-------'-------'-------'
+ */
+		adjust_layer {
+		    bindings = <
+		&none &kp C_BRI_INC &kp C_PREV   &kp C_PP     &kp C_NEXT   &kp C_VOL_UP   		&kp F1  &kp F2  &kp F3 &kp F4 &kp F5  &none
+		&none &kp C_BRI_DEC &none        &none        &none        &kp C_VOL_DN			&kp F6  &kp F7  &kp F8 &kp F9 &kp F10 &none
+		&none &bt BT_CLR    &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &kp C_MUTE	        &kp F11 &kp F12 &none  &none  &none   &none
+					   &trans &trans &trans                                             &trans &trans &trans
+		    >;
+		};
     };
 };
