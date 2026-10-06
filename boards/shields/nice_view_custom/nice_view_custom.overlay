@@ -1,0 +1,4 @@
+/*
+ * Nothing to add: the display hardware comes from the nice_view shield this one
+ * is stacked on. Zephyr only recognises a shield that has an overlay file.
+ */
