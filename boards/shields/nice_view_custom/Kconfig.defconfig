@@ -1,0 +1,18 @@
+if SHIELD_NICE_VIEW_CUSTOM
+
+config NICE_VIEW_CUSTOM_STATUS
+    bool "Modified nice!view status widget from this config repo"
+    default y
+    depends on ZMK_DISPLAY_STATUS_SCREEN_CUSTOM
+    select LV_FONT_MONTSERRAT_16
+    select LV_USE_IMG
+    select LV_USE_CANVAS
+
+if !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
+
+config NICE_VIEW_CUSTOM_STATUS
+    select LV_FONT_MONTSERRAT_14
+
+endif # !ZMK_SPLIT || ZMK_SPLIT_ROLE_CENTRAL
+
+endif # SHIELD_NICE_VIEW_CUSTOM

@@ -1,0 +1,7 @@
+file_format: "1"
+id: nice_view_custom
+name: nice!view (modified status widget)
+type: shield
+requires: [nice_view]
+features:
+  - display
