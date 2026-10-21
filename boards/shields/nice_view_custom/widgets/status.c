@@ -18,13 +18,11 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 #include <zmk/events/battery_state_changed.h>
 #include <zmk/events/ble_active_profile_changed.h>
 #include <zmk/events/endpoint_changed.h>
-#include <zmk/events/activity_state_changed.h>
 #include <zmk/events/layer_state_changed.h>
 #include <zmk/usb.h>
 #include <zmk/ble.h>
 #include <zmk/endpoints.h>
 #include <zmk/keymap.h>
-#include <zmk/activity.h>
 
 static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
 
@@ -40,10 +38,6 @@ struct output_status_state {
 struct layer_status_state {
     zmk_keymap_layer_index_t index;
     const char *label;
-};
-
-struct idle_status_state {
-    bool idle;
 };
 
 /* Profiles are full-width boxes stacked down the screen, 20px tall on a 23px pitch.
@@ -118,34 +112,31 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
     // Draw battery
     draw_battery(canvas, state);
 
-    // Only the battery stays on screen while idle
-    if (!state->idle) {
-        // Draw output status
-        char output_text[10] = {};
+    // Draw output status
+    char output_text[10] = {};
 
-        switch (state->selected_endpoint.transport) {
-        case ZMK_TRANSPORT_USB:
-            strcat(output_text, LV_SYMBOL_USB);
-            break;
-        case ZMK_TRANSPORT_BLE:
-            if (state->active_profile_bonded) {
-                if (state->active_profile_connected) {
-                    strcat(output_text, LV_SYMBOL_WIFI);
-                } else {
-                    strcat(output_text, LV_SYMBOL_CLOSE);
-                }
+    switch (state->selected_endpoint.transport) {
+    case ZMK_TRANSPORT_USB:
+        strcat(output_text, LV_SYMBOL_USB);
+        break;
+    case ZMK_TRANSPORT_BLE:
+        if (state->active_profile_bonded) {
+            if (state->active_profile_connected) {
+                strcat(output_text, LV_SYMBOL_WIFI);
             } else {
-                strcat(output_text, LV_SYMBOL_SETTINGS);
+                strcat(output_text, LV_SYMBOL_CLOSE);
             }
-            break;
+        } else {
+            strcat(output_text, LV_SYMBOL_SETTINGS);
         }
+        break;
+    }
 
-        lv_canvas_draw_text(canvas, 0, 0, CANVAS_SIZE, &label_dsc, output_text);
+    lv_canvas_draw_text(canvas, 0, 0, CANVAS_SIZE, &label_dsc, output_text);
 
-        // Draw the first profiles
-        for (int i = 0; i < PROFILES_IN_TOP; i++) {
-            draw_profile(canvas, state, i, PROFILE_BOX_TOP_Y + i * PROFILE_BOX_PITCH);
-        }
+    // Draw the first profiles
+    for (int i = 0; i < PROFILES_IN_TOP; i++) {
+        draw_profile(canvas, state, i, PROFILE_BOX_TOP_Y + i * PROFILE_BOX_PITCH);
     }
 
     // Rotate canvas
@@ -299,26 +290,6 @@ ZMK_DISPLAY_WIDGET_LISTENER(widget_layer_status, struct layer_status_state, laye
 
 ZMK_SUBSCRIPTION(widget_layer_status, zmk_layer_state_changed);
 
-static void set_idle_status(struct zmk_widget_status *widget, struct idle_status_state state) {
-    widget->state.idle = state.idle;
-
-    set_idle_cover(widget->idle_cover, state.idle);
-    draw_top(widget->obj, widget->cbuf, &widget->state);
-}
-
-static void idle_status_update_cb(struct idle_status_state state) {
-    struct zmk_widget_status *widget;
-    SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) { set_idle_status(widget, state); }
-}
-
-static struct idle_status_state idle_status_get_state(const zmk_event_t *eh) {
-    return (struct idle_status_state){.idle = zmk_activity_get_state() != ZMK_ACTIVITY_ACTIVE};
-}
-
-ZMK_DISPLAY_WIDGET_LISTENER(widget_idle_status, struct idle_status_state, idle_status_update_cb,
-                            idle_status_get_state)
-ZMK_SUBSCRIPTION(widget_idle_status, zmk_activity_state_changed);
-
 int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     widget->obj = lv_obj_create(parent);
     lv_obj_set_size(widget->obj, 160, 68);
@@ -331,13 +302,11 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_obj_t *bottom = lv_canvas_create(widget->obj);
     lv_obj_align(bottom, LV_ALIGN_TOP_LEFT, -44, 0);
     lv_canvas_set_buffer(bottom, widget->cbuf3, CANVAS_SIZE, CANVAS_SIZE, LV_IMG_CF_TRUE_COLOR);
-    widget->idle_cover = create_idle_cover(widget->obj);
 
     sys_slist_append(&widgets, &widget->node);
     widget_battery_status_init();
     widget_output_status_init();
     widget_layer_status_init();
-    widget_idle_status_init();
 
     return 0;
 }

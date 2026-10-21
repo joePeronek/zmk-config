@@ -15,8 +15,6 @@ LOG_MODULE_DECLARE(zmk, CONFIG_ZMK_LOG_LEVEL);
 #include <zmk/events/usb_conn_state_changed.h>
 #include <zmk/event_manager.h>
 #include <zmk/events/battery_state_changed.h>
-#include <zmk/events/activity_state_changed.h>
-#include <zmk/activity.h>
 #include <zmk/split/bluetooth/peripheral.h>
 #include <zmk/events/split_peripheral_status_changed.h>
 #include <zmk/usb.h>
@@ -30,10 +28,6 @@ static sys_slist_t widgets = SYS_SLIST_STATIC_INIT(&widgets);
 
 struct peripheral_status_state {
     bool connected;
-};
-
-struct idle_status_state {
-    bool idle;
 };
 
 static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_state *state) {
@@ -50,11 +44,9 @@ static void draw_top(lv_obj_t *widget, lv_color_t cbuf[], const struct status_st
     // Draw battery
     draw_battery(canvas, state);
 
-    // Draw output status, hidden while idle so only the battery stays on screen
-    if (!state->idle) {
-        lv_canvas_draw_text(canvas, 0, 0, CANVAS_SIZE, &label_dsc,
-                            state->connected ? LV_SYMBOL_WIFI : LV_SYMBOL_CLOSE);
-    }
+    // Draw output status
+    lv_canvas_draw_text(canvas, 0, 0, CANVAS_SIZE, &label_dsc,
+                        state->connected ? LV_SYMBOL_WIFI : LV_SYMBOL_CLOSE);
 
     // Rotate canvas
     rotate_canvas(canvas, cbuf);
@@ -113,26 +105,6 @@ ZMK_DISPLAY_WIDGET_LISTENER(widget_peripheral_status, struct peripheral_status_s
                             output_status_update_cb, get_state)
 ZMK_SUBSCRIPTION(widget_peripheral_status, zmk_split_peripheral_status_changed);
 
-static void set_idle_status(struct zmk_widget_status *widget, struct idle_status_state state) {
-    widget->state.idle = state.idle;
-
-    set_idle_cover(widget->idle_cover, state.idle);
-    draw_top(widget->obj, widget->cbuf, &widget->state);
-}
-
-static void idle_status_update_cb(struct idle_status_state state) {
-    struct zmk_widget_status *widget;
-    SYS_SLIST_FOR_EACH_CONTAINER(&widgets, widget, node) { set_idle_status(widget, state); }
-}
-
-static struct idle_status_state idle_status_get_state(const zmk_event_t *eh) {
-    return (struct idle_status_state){.idle = zmk_activity_get_state() != ZMK_ACTIVITY_ACTIVE};
-}
-
-ZMK_DISPLAY_WIDGET_LISTENER(widget_idle_status, struct idle_status_state, idle_status_update_cb,
-                            idle_status_get_state)
-ZMK_SUBSCRIPTION(widget_idle_status, zmk_activity_state_changed);
-
 int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     widget->obj = lv_obj_create(parent);
     lv_obj_set_size(widget->obj, 160, 68);
@@ -144,12 +116,9 @@ int zmk_widget_status_init(struct zmk_widget_status *widget, lv_obj_t *parent) {
     lv_img_set_src(art, &my_art);
     lv_obj_align(art, LV_ALIGN_TOP_LEFT, 0, 0);
 
-    widget->idle_cover = create_idle_cover(widget->obj);
-
     sys_slist_append(&widgets, &widget->node);
     widget_battery_status_init();
     widget_peripheral_status_init();
-    widget_idle_status_init();
 
     return 0;
 }

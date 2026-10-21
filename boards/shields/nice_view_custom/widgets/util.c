@@ -24,30 +24,6 @@ void rotate_canvas(lv_obj_t *canvas, lv_color_t cbuf[]) {
                         CANVAS_SIZE / 2, true);
 }
 
-/* Blank panel over everything but the battery row at the top of the screen
- * (the top 20 portrait rows are the right edge of the 160x68 panel).
- */
-lv_obj_t *create_idle_cover(lv_obj_t *parent) {
-    lv_obj_t *cover = lv_obj_create(parent);
-    lv_obj_set_size(cover, 140, 68);
-    lv_obj_align(cover, LV_ALIGN_TOP_LEFT, 0, 0);
-    lv_obj_set_style_bg_color(cover, LVGL_BACKGROUND, LV_PART_MAIN);
-    lv_obj_set_style_bg_opa(cover, LV_OPA_COVER, LV_PART_MAIN);
-    lv_obj_set_style_border_width(cover, 0, LV_PART_MAIN);
-    lv_obj_set_style_radius(cover, 0, LV_PART_MAIN);
-    lv_obj_set_style_pad_all(cover, 0, LV_PART_MAIN);
-    lv_obj_add_flag(cover, LV_OBJ_FLAG_HIDDEN);
-    return cover;
-}
-
-void set_idle_cover(lv_obj_t *cover, bool idle) {
-    if (idle) {
-        lv_obj_clear_flag(cover, LV_OBJ_FLAG_HIDDEN);
-    } else {
-        lv_obj_add_flag(cover, LV_OBJ_FLAG_HIDDEN);
-    }
-}
-
 void draw_battery(lv_obj_t *canvas, const struct status_state *state) {
     lv_draw_rect_dsc_t rect_black_dsc;
     init_rect_dsc(&rect_black_dsc, LVGL_BACKGROUND);
