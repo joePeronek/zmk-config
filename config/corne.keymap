@@ -59,7 +59,7 @@
  * |  Z  |  X  |  C  |  V  |  B  |                      |  K  |  M  |  ,  |  .  |  /  |
  * `-----'-----'-----'-----'-----'                      `-----'-----'-----'-----'-----'
  *               .-------.-------.-------.      .-------.-------.-------.
- *               |  TAB  |  ESC  |SPC/NAV|      |ENT/SYM| BSPC  | SHIFT |
+ *               |  TAB  |  ESC  |SPC/NAV|      |ENT/SYM| SHIFT | BSPC  |
  *               '-------'-------'-------'      '-------'-------'-------'
  */
         default_layer {
@@ -68,7 +68,7 @@
         &none &kp Q     &kp W       &kp F       &kp P       &kp G           &kp J &kp L         &kp U       &kp Y       &kp SEMI &none
         &none &kp A     &hm LCTRL R &hm LALT S  &hm LGUI T  &kp D           &kp H &hm RGUI N    &hm LALT E  &hm LCTRL I &kp O &none    
         &none &kp Z     &kp X       &kp C       &kp V       &kp B           &kp K &kp M         &kp COMMA   &kp DOT     &kp FSLH &none
-                              &kp TAB &kp ESC &lt NAV SPACE                 &lt SYM ENTER &kp BSPC &kp LSHIFT
+                              &kp TAB &kp ESC &lt NAV SPACE                 &lt SYM ENTER &kp LSHIFT &kp BSPC
             >;
        };
 /* Layer 1: Symbols (hold Enter). Unshifted symbol above its shifted pair;
